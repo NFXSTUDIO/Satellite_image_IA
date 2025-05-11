@@ -13,7 +13,7 @@ ee.Initialize(project='ee-arthurcourbevoie')
 
 # Define the dataset and time range
 dataset = ee.ImageCollection('TOMS/MERGED')
-start_date = '2000-01-01'
+start_date = '2024-01-01'
 end_date = '2024-12-31'
 
 # Filter the dataset
@@ -57,12 +57,13 @@ scaled_data = pd.DataFrame(scaled_features, columns=['ozone_scaled', 'day_of_yea
 
 # Prepare data for machine learning
 X = scaled_data[['day_of_year_scaled']].values
+print(X)
 y = scaled_data['ozone_scaled'].values
 
 # Split data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-model = RandomForestRegressor(n_estimators=3000, random_state=60,criterion='absolute_error')
+model = RandomForestRegressor(n_estimators=3000, random_state=60,criterion='friedman_mse')
 model.fit(X_train, y_train)
 
 # Make predictions on the test set
@@ -71,8 +72,10 @@ y_pred = model.predict(X_test)
 # Evaluate the model
 r2 = r2_score(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
+accuracy = model.score(X_test, y_test)
 print(f"R-squared: {r2 * 100}%")
 print(f"Mean Squared Error: {mse * 100}%")
+print(f"Accuracy: {accuracy * 100}%")
 
 t = list(range(1, len(y_test) + 1))
 #Plotting the results

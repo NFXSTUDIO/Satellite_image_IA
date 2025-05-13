@@ -1,7 +1,7 @@
 <p align="center">
   <br>
   <a href="#">
-    <img src="votre-logo-ici.png" alt="Logo du Projet" width="200">
+    <img src="Logo_IPSA.png" alt="Logo du Projet" width="200">
   </a>
   <br>
 </p>
